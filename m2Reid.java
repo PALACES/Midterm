@@ -9,9 +9,9 @@
  
  PICK 3 WORDS THAT START WITH YOUR INITIALS, using lower case letters:
  
- first word............app
- second word...........jack
- third word............rhin
+ first word............Apple
+ second word...........Jackal
+ third word............Rhino
  
  USE THESE 3 WORDS TO NAME ALL VARIABLES FOR 3 POOL BALLS.
  (You may abbreviate any words, but start with same letter.)
@@ -21,17 +21,29 @@
 //// GLOBALS FOR 3 colored balls ////
 //// (Assume ball diameter is 30.) ////
 
-float appX, appY, appDX, appDY;          //++++ MODIFY THIS.  Don' use "wolf". ++++
-float jackX, jackY, jackDX, jackDY;              //++++ MODIFY THIS.  Don' use "ham". ++++
-float rhinX, rhinY, rhinDX, rhinDY;      //++++ MODIFY THIS.  Don' use "hippo". ++++
+float appX, appY, appDX, appDY;          
+float jackX, jackY, jackDX, jackDY;             
+float rhinX, rhinY, rhinDX, rhinDY;      
+float ballW = 30;
+float ballH = 30;
 
-float buttonX = width/4;
-float buttonY = height/4;
-float buttonW = 80;
-float buttonH = 65;
+//reset button floats
+float buttonX = 85;
+float buttonY = 50;
+float buttonW = 60;
+float buttonH = 40;
 
-//++++ MODIFY THESE DECLARATIONS -- Do not use "wolf" or "ham" or "hippo" ++++
+//wall button floats
+float buttonX1 = 150;
+float buttonY1 = 50;
+float buttonW1 = 60;
+float buttonH1 = 40;
 
+//pink button floats
+float buttonX2 = 215;
+float buttonY2 = 50;
+float buttonW2 = 60;
+float buttonH2 = 40;
 
 //// OTHER GLOBALS:  strings, pool table, etc ////
 
@@ -46,13 +58,11 @@ boolean wall=true;
 int tableRed=150, tableGreen=250, tableBlue=150;      // green pool table
 int score=0, m=0, k=0;
 
-// ADD YOUR OWN DECLARATIONS HERE. ++++
-
 
 //// SETUP:  size and table
 void setup() {
   rectMode(CENTER);  
-  size( 640, 480 );          //++++ CHANGE THE SIZE -- see instructions! ++++
+  size( 640, 480 );          
   reset();
   //// MODIFY THIS CODE TO MAKE TABLE CENTERED IN WINDOW.  ++++
 
@@ -132,15 +142,14 @@ void reset() {
 void table( float east, float north, float west, float south ) {
   fill( tableRed, tableGreen, tableBlue );    // pool table
   strokeWeight(20);
-  stroke( 127, 0, 0 );      // Brown walls
-  rect( east-20, north-30, west+20, south+20 );
+  stroke( 201, 160, 57 );      // Brown walls
+  rect( east-20, north-30, west+20, south+20, 2 );
 
-  //++++ MODIFY THIS CODE, as necessary. ++++
 
   // Start with a WALL down the middle of the table! 
   if (wall) {
     float middle=  (east+west)/2;    
-    stroke( 0, 127, 0 );
+    stroke( 113, 104, 79 );
     line( middle, north-5, middle, south-10 );
   }
   stroke(0);
@@ -220,15 +229,15 @@ void collisions() {
 void show() {
   ellipseMode(CENTER);
   fill(255, 0, 0); 
-  ellipse(appX, appY, 30, 30); 
+  ellipse(appX, appY, ballW, ballH); 
   fill(255); 
   text("1", appX-4, appY+3);
   fill (255, 255, 0); 
-  ellipse(jackX, jackY, 30, 30); 
+  ellipse(jackX, jackY, ballW, ballH); 
   fill(0); 
   text("2", jackX-4, jackY+3);
   fill (0, 0, 255); 
-  ellipse(rhinX, rhinY, 30, 30); 
+  ellipse(rhinX, rhinY, ballW, ballH); 
   fill(255); 
   text("3", rhinX-4, rhinY+3);
   fill(0);
@@ -236,11 +245,28 @@ void show() {
 }
 
 void buttons() {
+  rectMode(CENTER);
+  //SHOW the reset button
   fill(173, 154, 108);
   rect(buttonX, buttonY, buttonW, buttonH, 5);
   fill(255, 215, 113);
-  text("Reset", buttonX+23, buttonY+38);
+  text("Reset", buttonX-15, buttonY+5);
   fill(206, 153, 17);
+  
+  //SHOW the wall button
+  fill(173, 154, 108);
+  rect(buttonX1, buttonY1, buttonW1, buttonH1, 5);
+  fill(255, 215, 113);
+  text("Wall", buttonX+53, buttonY+5);
+  fill(206, 153, 17);
+  
+  //SHOW the pink button
+  fill(173, 154, 108);
+  rect(buttonX2, buttonY2, buttonW2, buttonH2, 5);
+  fill(255, 215, 113);
+  text("Pink", buttonX+118, buttonY+5);
+  fill(206, 153, 17);
+
 }
 void messages() {
   fill(0);
@@ -248,10 +274,51 @@ void messages() {
   text( news, width/6, 30 );
   text( author, 10, height-5 );
 }
-void mousePressed() {
+void mousePressed() { 
+ // reset method
   if (over_reset()) reset();
-}
+// second button; removes WALL
+  if ((mouseX < buttonX1 + buttonW1/2) &&
+    (mouseX > buttonX1 - buttonW1/2) &&
+    (mouseY < buttonY1 + buttonH1/2) &&
+    (mouseY > buttonY1 - buttonH1/2))
+   wall = false; 
+//turns the pool table pink
+   if ((mouseX < buttonX2 + buttonW2/2) &&
+    (mouseX > buttonX2 - buttonW2/2) &&
+    (mouseY < buttonY2 + buttonH2/2) &&
+    (mouseY > buttonY2 - buttonH2/2)) 
+ { tableRed = 191;
+   tableGreen =75;
+   tableBlue = 119;
+//mouseclicks reset each ball's position to right half of the table.
+   }
+  if ((mouseX < appX + ballW/2) &&
+     (mouseX > appX - ballW/2) &&
+     (mouseY < appY + ballH/2) &&
+     (mouseY > appY - ballH/2))
+     
+ { appX= random(middle+300, right); 
+   appY= random(top, bottom); }
 
+  if ((mouseX < jackX + ballW/2) &&
+     (mouseX > jackX - ballW/2) &&
+     (mouseY < jackY + ballH/2) &&
+     (mouseY > jackY - ballH/2))
+ { jackX= random(middle+300, right); 
+   jackY= random(top, bottom); }
+
+  if ((mouseX < rhinX + ballW/2) &&
+     (mouseX > rhinX - ballW/2) &&
+     (mouseY < rhinY + ballH/2) &&
+     (mouseY > rhinY - ballH/2))
+ { rhinX= random(middle+300, right); 
+   rhinY= random(top, bottom); }
+
+
+}
+ /*boolean reset method for first button. 
+ THIS was pretty difficult to figure out.*/
 boolean over_reset() {
   return (
   (mouseX < buttonX + buttonW) &&
@@ -259,3 +326,4 @@ boolean over_reset() {
     (mouseY < buttonY + buttonH) &&
     (mouseY > buttonY) );
 }
+
