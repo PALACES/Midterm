@@ -26,6 +26,8 @@ float jackX, jackY, jackDX, jackDY;
 float rhinX, rhinY, rhinDX, rhinDY;      
 float ballW = 30;
 float ballH = 30;
+float ratX, ratY;
+boolean ratShow;
 
 //reset button floats
 float buttonX = 85;
@@ -45,6 +47,11 @@ float buttonY2 = 50;
 float buttonW2 = 60;
 float buttonH2 = 40;
 
+//rat button floats
+float buttonX3 = 280;
+float buttonY3 = 50;
+float buttonW3 = 60;
+float buttonH3 = 40;
 //// OTHER GLOBALS:  strings, pool table, etc ////
 
 String title=  "CST112 MIDTERM EXAM";
@@ -76,6 +83,7 @@ void draw() {
   rectMode( CORNERS );
   table( left, top, right, bottom );
   buttons();
+  rat();
   bounce();
   collisions();
   show();
@@ -111,7 +119,9 @@ void keyPressed() {
     rhinX= random(middle+300, right); 
     rhinY= random( top, bottom);
   }
+  if (key == 'm') ratShow =! ratShow;
 }
+
 void reset() {
 
   //random positions
@@ -130,12 +140,15 @@ void reset() {
   jackDY= random(1-9);
   rhinDX= random(1-9); 
   rhinDY= random(1-9);
-
+  //resets the collision counter
   score=0;
   //restores original table color
   tableRed=150;
   tableGreen=250;  
   tableBlue=150;
+  ratX=1;
+  ratY=height - 50;
+  ratShow = false;
 }
 
 //// SCENE:  draw the table with wall down the middle
@@ -252,14 +265,14 @@ void buttons() {
   fill(255, 215, 113);
   text("Reset", buttonX-15, buttonY+5);
   fill(206, 153, 17);
-  
+
   //SHOW the wall button
   fill(173, 154, 108);
   rect(buttonX1, buttonY1, buttonW1, buttonH1, 5);
   fill(255, 215, 113);
   text("Wall", buttonX+53, buttonY+5);
   fill(206, 153, 17);
-  
+
   //SHOW the pink button
   fill(173, 154, 108);
   rect(buttonX2, buttonY2, buttonW2, buttonH2, 5);
@@ -267,6 +280,27 @@ void buttons() {
   text("Pink", buttonX+118, buttonY+5);
   fill(206, 153, 17);
 
+  //SHOW the mouse button
+  fill(173, 154, 108);
+  rect(buttonX3, buttonY3, buttonW3, buttonH3, 5);
+  fill(255, 215, 113);
+  text("Mouse", buttonX+175, buttonY+5);
+  fill(206, 153, 17);
+}
+
+void rat() {
+  fill(255);
+  ratX+=4;
+  if (ratShow == true) {
+    if (frameCount % 30 > 15) {
+      line(ratX, ratY, ratX-20, ratY-10);
+    } else {
+      line(ratX, ratY, ratX-20, ratY+10);
+    }
+  }
+  if (ratX > width) {
+    ratX = 1;
+  }
 }
 void messages() {
   fill(0);
@@ -275,55 +309,69 @@ void messages() {
   text( author, 10, height-5 );
 }
 void mousePressed() { 
- // reset method
+  // reset method
   if (over_reset()) reset();
-// second button; removes WALL
+
+  // second button; removes WALL
   if ((mouseX < buttonX1 + buttonW1/2) &&
     (mouseX > buttonX1 - buttonW1/2) &&
     (mouseY < buttonY1 + buttonH1/2) &&
     (mouseY > buttonY1 - buttonH1/2))
-   wall = false; 
-//turns the pool table pink
-   if ((mouseX < buttonX2 + buttonW2/2) &&
+    wall = false; 
+
+  //turns the pool table pink
+  if ((mouseX < buttonX2 + buttonW2/2) &&
     (mouseX > buttonX2 - buttonW2/2) &&
     (mouseY < buttonY2 + buttonH2/2) &&
     (mouseY > buttonY2 - buttonH2/2)) 
- { tableRed = 191;
-   tableGreen =75;
-   tableBlue = 119;
-//mouseclicks reset each ball's position to right half of the table.
-   }
+  { 
+    tableRed = 191;
+    tableGreen =75;
+    tableBlue = 119;
+ //toggles running mouse on/off
+    if ((mouseX < buttonX3 + buttonW3/2) &&
+    (mouseX > buttonX3 - buttonW3/2) &&
+    (mouseY < buttonY3 + buttonH3/2) &&
+    (mouseY > buttonY3 - buttonH3/2))
+    
+    {ratShow =! ratShow;}
+    
+    //mouseclicks reset each ball's position to right half of the table.
+  }
   if ((mouseX < appX + ballW/2) &&
-     (mouseX > appX - ballW/2) &&
-     (mouseY < appY + ballH/2) &&
-     (mouseY > appY - ballH/2))
-     
- { appX= random(middle+300, right); 
-   appY= random(top, bottom); }
+    (mouseX > appX - ballW/2) &&
+    (mouseY < appY + ballH/2) &&
+    (mouseY > appY - ballH/2))
+
+  { 
+    appX= random(middle+300, right); 
+    appY= random(top, bottom);
+  }
 
   if ((mouseX < jackX + ballW/2) &&
-     (mouseX > jackX - ballW/2) &&
-     (mouseY < jackY + ballH/2) &&
-     (mouseY > jackY - ballH/2))
- { jackX= random(middle+300, right); 
-   jackY= random(top, bottom); }
+    (mouseX > jackX - ballW/2) &&
+    (mouseY < jackY + ballH/2) &&
+    (mouseY > jackY - ballH/2))
+  { 
+    jackX= random(middle+300, right); 
+    jackY= random(top, bottom);
+  }
 
   if ((mouseX < rhinX + ballW/2) &&
-     (mouseX > rhinX - ballW/2) &&
-     (mouseY < rhinY + ballH/2) &&
-     (mouseY > rhinY - ballH/2))
- { rhinX= random(middle+300, right); 
-   rhinY= random(top, bottom); }
-
-
+    (mouseX > rhinX - ballW/2) &&
+    (mouseY < rhinY + ballH/2) &&
+    (mouseY > rhinY - ballH/2))
+  { 
+    rhinX= random(middle+300, right); 
+    rhinY= random(top, bottom);
+  }
 }
- /*boolean reset method for first button. 
+/*boolean reset method for first button. 
  THIS was pretty difficult to figure out.*/
 boolean over_reset() {
   return (
-  (mouseX < buttonX + buttonW) &&
+    (mouseX < buttonX + buttonW) &&
     (mouseX > buttonX) &&
     (mouseY < buttonY + buttonH) &&
     (mouseY > buttonY) );
 }
-
