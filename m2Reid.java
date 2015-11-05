@@ -297,23 +297,26 @@ void rat() {
       fill(0); 
       ellipse(ratX-22, ratY-15, 60, 30);
       ellipse(ratX, ratY-20, 30, 30);
-      ellipse(ratX+10, ratY-20, 30, 20);
-      ellipse(ratX+26, ratY-20, 7, 7);
-      strokeWeight(5);
-       // these are the rat's legs
-      line(ratX-5, ratY-5, ratX+5, ratY+5);   
-      line(ratX-15, ratY-5, ratX-5, ratY+5);
-      line(ratX-30, ratY-5, ratX-18, ratY+5);
-      line(ratX-45, ratY-5, ratX-31, ratY+5);
+      ellipse(ratX+10, ratY-20, 30, 20);        
+      line(ratX-80, ratY-30, ratX-40, ratY-20); // tail
+      fill(252, 106, 202);
+      ellipse(ratX+26, ratY-20, 7, 7);        // nose
+      strokeWeight(5);   
+      line(ratX-5, ratY-5, ratX+5, ratY+5);   //  leg #1
+      line(ratX-15, ratY-5, ratX-5, ratY+5);  //  leg #2
+      line(ratX-30, ratY-5, ratX-18, ratY+5); //  leg #3
+      line(ratX-45, ratY-5, ratX-31, ratY+5); //  leg #4 
   } else {
       fill(0);
       ellipse(ratX-22, ratY-15, 60, 30);
       ellipse(ratX, ratY-20, 30, 30);
       ellipse(ratX+10, ratY-20, 30, 20);
+      line(ratX-80, ratY-20, ratX-40, ratY-20);
+      fill(252, 106, 202);
       ellipse(ratX+26, ratY-20, 7, 7);     
       strokeWeight(5);
-      // these are the rat's legs 2nd frame position
-      line(ratX-5, ratY+5, ratX+5, ratY-5);
+     
+      line(ratX-5, ratY+5, ratX+5, ratY-5);   
       line(ratX-15, ratY+5, ratX-5, ratY-5);
       line(ratX-30, ratY+5, ratX-18, ratY-5);
       line(ratX-45, ratY+5, ratX-31, ratY-5);
