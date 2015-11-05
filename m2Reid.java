@@ -241,6 +241,7 @@ void collisions() {
 //// SHOW:  balls, messages, etc.
 void show() {
   ellipseMode(CENTER);
+   strokeWeight(1);
   fill(255, 0, 0); 
   ellipse(appX, appY, ballW, ballH); 
   fill(255); 
@@ -293,9 +294,30 @@ void rat() {
   ratX+=4;
   if (ratShow == true) {
     if (frameCount % 30 > 15) {
-      line(ratX, ratY, ratX-20, ratY-10);
-    } else {
-      line(ratX, ratY, ratX-20, ratY+10);
+      fill(0); 
+      ellipse(ratX-22, ratY-15, 60, 30);
+      ellipse(ratX, ratY-20, 30, 30);
+      ellipse(ratX+10, ratY-20, 30, 20);
+      ellipse(ratX+26, ratY-20, 7, 7);
+      strokeWeight(5);
+       // these are the rat's legs
+      line(ratX-5, ratY-5, ratX+5, ratY+5);   
+      line(ratX-15, ratY-5, ratX-5, ratY+5);
+      line(ratX-30, ratY-5, ratX-18, ratY+5);
+      line(ratX-45, ratY-5, ratX-31, ratY+5);
+  } else {
+      fill(0);
+      ellipse(ratX-22, ratY-15, 60, 30);
+      ellipse(ratX, ratY-20, 30, 30);
+      ellipse(ratX+10, ratY-20, 30, 20);
+      ellipse(ratX+26, ratY-20, 7, 7);     
+      strokeWeight(5);
+      // these are the rat's legs 2nd frame position
+      line(ratX-5, ratY+5, ratX+5, ratY-5);
+      line(ratX-15, ratY+5, ratX-5, ratY-5);
+      line(ratX-30, ratY+5, ratX-18, ratY-5);
+      line(ratX-45, ratY+5, ratX-31, ratY-5);
+      
     }
   }
   if (ratX > width) {
@@ -305,7 +327,7 @@ void rat() {
 void messages() {
   fill(0);
   text( title, width/3, 15 );
-  text( news, width/6, 30 );
+  text( news, width/6, 28 );
   text( author, 10, height-5 );
 }
 void mousePressed() { 
