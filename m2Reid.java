@@ -294,28 +294,38 @@ void rat() {
   ratX+=4;
   if (ratShow == true) {
     if (frameCount % 30 > 15) {
+      //these are all of the rat's other body parts.
       fill(0); 
       ellipse(ratX-22, ratY-15, 60, 30);
       ellipse(ratX, ratY-20, 30, 30);
-      ellipse(ratX+10, ratY-20, 30, 20);        
-      line(ratX-80, ratY-30, ratX-40, ratY-20); // tail
+      ellipse(ratX+10, ratY-20, 30, 20); 
+      ellipse(ratX-5, ratY-30, 30, 30);
       fill(252, 106, 202);
-      ellipse(ratX+26, ratY-20, 7, 7);        // nose
+      line(ratX-80, ratY-30, ratX-40, ratY-20); 
+      ellipse(ratX+26, ratY-20, 7, 7);        
+      fill(255);
+      arc(ratX+8.5, ratY-25, 7, 7, 0, PI); 
       strokeWeight(5);   
-      line(ratX-5, ratY-5, ratX+5, ratY+5);   //  leg #1
-      line(ratX-15, ratY-5, ratX-5, ratY+5);  //  leg #2
-      line(ratX-30, ratY-5, ratX-18, ratY+5); //  leg #3
-      line(ratX-45, ratY-5, ratX-31, ratY+5); //  leg #4 
+      //these are the rat's legs
+      line(ratX-5, ratY-5, ratX+5, ratY+5);   
+      line(ratX-15, ratY-5, ratX-5, ratY+5);  
+      line(ratX-30, ratY-5, ratX-18, ratY+5); 
+      line(ratX-45, ratY-5, ratX-31, ratY+5); 
   } else {
+      //these are the second frame of the other rat's body parts
       fill(0);
-      ellipse(ratX-22, ratY-15, 60, 30);
+      ellipse(ratX-22, ratY-15, 60, 30); 
       ellipse(ratX, ratY-20, 30, 30);
       ellipse(ratX+10, ratY-20, 30, 20);
+      ellipse(ratX-5, ratY-30, 30, 30);
+      fill(255);
+      arc(ratX+8.5, ratY-25, 7, 7, 0, PI); 
+      fill(252, 106, 202);
       line(ratX-80, ratY-20, ratX-40, ratY-20);
       fill(252, 106, 202);
       ellipse(ratX+26, ratY-20, 7, 7);     
       strokeWeight(5);
-     
+     //these are the second frames for the rat's legs
       line(ratX-5, ratY+5, ratX+5, ratY-5);   
       line(ratX-15, ratY+5, ratX-5, ratY-5);
       line(ratX-30, ratY+5, ratX-18, ratY-5);
@@ -323,6 +333,7 @@ void rat() {
       
     }
   }
+  //resets rat's position to left side of screen
   if (ratX > width) {
     ratX = 1;
   }
@@ -342,24 +353,26 @@ void mousePressed() {
     (mouseX > buttonX1 - buttonW1/2) &&
     (mouseY < buttonY1 + buttonH1/2) &&
     (mouseY > buttonY1 - buttonH1/2))
+    {
     wall = false; 
-
+    }
   //turns the pool table pink
   if ((mouseX < buttonX2 + buttonW2/2) &&
     (mouseX > buttonX2 - buttonW2/2) &&
     (mouseY < buttonY2 + buttonH2/2) &&
     (mouseY > buttonY2 - buttonH2/2)) 
-  { 
+    {
     tableRed = 191;
-    tableGreen =75;
+    tableGreen = 75;
     tableBlue = 119;
+    }
  //toggles running mouse on/off
     if ((mouseX < buttonX3 + buttonW3/2) &&
     (mouseX > buttonX3 - buttonW3/2) &&
     (mouseY < buttonY3 + buttonH3/2) &&
     (mouseY > buttonY3 - buttonH3/2))
-    
-    {ratShow =! ratShow;}
+    {
+    ratShow =true;
     
     //mouseclicks reset each ball's position to right half of the table.
   }
@@ -389,8 +402,9 @@ void mousePressed() {
   { 
     rhinX= random(middle+300, right); 
     rhinY= random(top, bottom);
+   }
   }
-}
+
 /*boolean reset method for first button. 
  THIS was pretty difficult to figure out.*/
 boolean over_reset() {
